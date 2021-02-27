@@ -1,14 +1,7 @@
 FROM ghcr.io/linuxserver/code-server:latest
 
 # set version label
-ARG BUILD_DATE
-ARG VERSION
-ARG CODE_RELEASE
-LABEL build_version="irfan44 version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="irfan44"
-
-# environment settings
-ENV HOME="/config"
 
 RUN \
   apt-get update && \
@@ -85,9 +78,6 @@ RUN yes | sdkmanager --licenses \
 ARG PHPANDROID_VERSION=0.2.0
 RUN cd $HOME \
  && wget -q https://github.com/AnandPilania/php-android-cli/releases/download/v0.2.0/phpandroid.phar
-
-# add local files
-COPY /root /
 
 # ports and volumes
 EXPOSE 8443
