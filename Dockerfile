@@ -83,7 +83,8 @@ RUN yes | sdkmanager --licenses \
 
 # Download phpandroid-cli
 ARG PHPANDROID_VERSION=0.2.0
-RUN wget -q https://github.com/AnandPilania/php-android-cli/releases/download/v${PHPANDROID_VERSION}/phpandroid.phar -d /config/workspaces
+RUN cd $HOME \
+ && wget -q https://github.com/AnandPilania/php-android-cli/releases/download/v0.2.0/phpandroid.phar
 
 # add local files
 COPY /root /
