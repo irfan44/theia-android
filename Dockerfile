@@ -56,7 +56,7 @@ RUN cd /opt \
  && unzip *kotlin*.zip \
  && rm *kotlin*.zip
 
-# download and install Android SDK
+# download and install Android command tools
 # https://developer.android.com/studio#command-tools
 ARG ANDROID_SDK_VERSION=6858069
 ENV ANDROID_SDK_ROOT /opt/android-sdk
@@ -70,6 +70,15 @@ RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools \
 ENV PATH ${PATH}:${JAVA_HOME}/bin:${GRADLE_HOME}/gradle-${GRADLE_VERSION}/bin:${KOTLIN_HOME}/bin:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/emulator
 ENV LD_LIBRARY_PATH ${ANDROID_SDK_ROOT}/emulator/lib64:${ANDROID_SDK_ROOT}/emulator/lib64/qt/lib
 ENV QTWEBENGINE_DISABLE_SANDBOX 1
+
+# Install Android SDK 30
+ARG ANDROID_VERSION=11
+ARG API_LEVEL=30
+ARG BUILD_VERSION=30.0.3
+ARG PROCESSOR=x86_64
+ARG IMG_TYPE=google_apis
+RUN yes | sdkmanager --licenses \
+ && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}" "system-images;android-${API_LEVEL};${IMG_TYPE};${PROCESSOR}" "sources;android-${API_LEVEL}"
 
 # add local files
 COPY /root /
