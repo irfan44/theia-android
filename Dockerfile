@@ -14,6 +14,7 @@ RUN \
   apt-get update && \
   apt-get install -y --no-install-recommends \
   apt-utils \
+  php \
   wget \
 #  libncurses5:i386 \
 #  libc6:i386 \
@@ -80,8 +81,12 @@ ARG IMG_TYPE=google_apis
 RUN yes | sdkmanager --licenses \
  && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}" "system-images;android-${API_LEVEL};${IMG_TYPE};${PROCESSOR}" "sources;android-${API_LEVEL}"
 
+# Download phpandroid-cli
+ARG PHPANDROID_VERSION=0.2.0
+RUN wget -q https://github.com/AnandPilania/php-android-cli/releases/download/v${PHPANDROID_VERSION}/phpandroid.phar -d /config/workspaces
+
 # add local files
 COPY /root /
 
 # ports and volumes
-EXPOSE 8443 5037 
+EXPOSE 8443
