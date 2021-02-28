@@ -4,11 +4,11 @@ FROM ghcr.io/linuxserver/code-server:latest
 LABEL maintainer="irfan44"
 
 RUN \
-  apt-get update && \
-  apt-get install -y --no-install-recommends \
-  apt-utils \
-  php \
-  wget \
+ apt-get update && \
+ apt-get install -y --no-install-recommends \
+ apt-utils \
+ php \
+ wget \
 #  libncurses5:i386 \
 #  libc6:i386 \
 #  libstdc++6:i386 \
@@ -16,9 +16,16 @@ RUN \
 #  lib32ncurses6 \
 #  lib32z1 \
 #  zlib1g:i386 \
-#  qt5-default \
-  unzip \
-  vim
+ tigervnc-standalone-server \
+ supervisor\
+ gosu \
+ qt5-default \
+ openbox \
+ unzip \
+ vim \
+ && rm -rf /var/lib/apt/lists \
+ && mkdir -p /usr/share/desktop-directories
+  
 
 # download and install Java
 ENV JDK_HOME /opt/java
@@ -78,6 +85,14 @@ RUN yes | sdkmanager --licenses \
 ARG PHPANDROID_VERSION=0.2.0
 RUN cd $HOME \
  && wget -q https://github.com/AnandPilania/php-android-cli/releases/download/v0.2.0/phpandroid.phar
+ 
+RUN cd /usr/bin \
+ && wget -q https://ci.appveyor.com/api/buildjobs/u3xd4v8sr44plljv/artifacts/easy-novnc_linux-64bit \
+ && chmod +x easy-novnc_linux-64bit
+
+COPY supervisord.conf /etc/
 
 # ports and volumes
-EXPOSE 8443
+EXPOSE 8443 8080
+
+CMD /usr/bin/supervisord --configuration /etc/supervisord.conf
