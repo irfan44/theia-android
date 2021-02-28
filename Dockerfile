@@ -20,6 +20,9 @@ RUN \
  supervisor\
  gosu \
  qt5-default \
+ qemu-kvm \
+ libxcomposite1 \
+ libxtst6 \
  openbox \
  unzip \
  vim \
