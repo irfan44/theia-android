@@ -1,13 +1,14 @@
-FROM ghcr.io/linuxserver/code-server:latest
+FROM irfannm/theia:latest
 
 # set version label
 LABEL maintainer="irfan44"
+
+USER root
 
 RUN \
  apt-get update && \
  apt-get install -y --no-install-recommends \
  apt-utils \
- php \
  wget \
  unzip \
  vim \
@@ -66,11 +67,6 @@ ARG IMG_TYPE=google_apis
 RUN yes | sdkmanager --licenses \
  && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}"
 
-# Download phpandroid-cli
-ARG PHPANDROID_VERSION=0.2.0
-RUN cd $HOME \
- && wget -q https://github.com/AnandPilania/php-android-cli/releases/download/v0.2.0/phpandroid.phar
- 
 # ports and volumes
-EXPOSE 8443
+EXPOSE 3000
 
