@@ -59,6 +59,8 @@ ARG IMG_TYPE=google_apis
 RUN yes | sdkmanager --licenses \
  && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}"
 
+USER theia
+
 # ports and volumes
 EXPOSE 3000
 
