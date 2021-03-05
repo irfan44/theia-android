@@ -20,7 +20,25 @@ This repository contains Dockerfiles of Theia with included Java, Kotlin, Gradle
 | theia-android-kotlin | Theia with Kotlin & Android SDK                              | 2.2 GB |
 | theia-android-full   | Theia with Java, Kotlin, & full Android SDK, including emulator | 6.2 GB |
 
+### Build APK
 
+To build your android debug apk, you can use the gradlew file inside the android project via the terminal
+
+#### Debug APK
+```
+# Make sure that you're in the project directory
+# Make gradlew executable with chmod +x gradlew
+./gradlew assembleDebug
+```
+
+#### Install debug APK to running emulator or connected device
+```
+# Make sure that you're in the project directory
+# Make gradlew executable with chmod +x gradlew
+./gradlew installeDebug
+```
+
+If you want to build a release APK and more information, you can check [here](https://developer.android.com/studio/build/building-cmdline).
 
 ### Links
 
