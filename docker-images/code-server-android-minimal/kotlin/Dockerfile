@@ -1,34 +1,19 @@
-FROM ghcr.io/linuxserver/code-server:latest
+FROM irfannm/theia:latest
 
 # set version label
 LABEL maintainer="irfan44"
+
+USER root
 
 RUN \
  apt-get update && \
  apt-get install -y --no-install-recommends \
  apt-utils \
- php \
+ ca-certificates \
  wget \
-#  libncurses5:i386 \
-#  libc6:i386 \
-#  libstdc++6:i386 \
-#  lib32gcc1 \
-#  lib32ncurses6 \
-#  lib32z1 \
-#  zlib1g:i386 \
- tigervnc-standalone-server \
- supervisor\
- gosu \
- qt5-default \
- qemu-kvm \
- libxcomposite1 \
- libxtst6 \
- openbox \
  unzip \
  vim \
  && rm -rf /var/lib/apt/lists \
- && mkdir -p /usr/share/desktop-directories
-  
 
 # download and install Java
 ENV JDK_HOME /opt/java
@@ -73,7 +58,6 @@ RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools \
 # Environment variable
 ENV PATH ${PATH}:${JAVA_HOME}/bin:${GRADLE_HOME}/gradle-${GRADLE_VERSION}/bin:${KOTLIN_HOME}/bin:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/emulator
 ENV LD_LIBRARY_PATH ${ANDROID_SDK_ROOT}/emulator/lib64:${ANDROID_SDK_ROOT}/emulator/lib64/qt/lib
-ENV QTWEBENGINE_DISABLE_SANDBOX 1
 
 # Install Android SDK 30
 ARG ANDROID_VERSION=11
@@ -82,20 +66,10 @@ ARG BUILD_VERSION=30.0.3
 ARG PROCESSOR=x86_64
 ARG IMG_TYPE=google_apis
 RUN yes | sdkmanager --licenses \
- && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}" "system-images;android-${API_LEVEL};${IMG_TYPE};${PROCESSOR}" "sources;android-${API_LEVEL}"
-
-# Download phpandroid-cli
-ARG PHPANDROID_VERSION=0.2.0
-RUN cd $HOME \
- && wget -q https://github.com/AnandPilania/php-android-cli/releases/download/v0.2.0/phpandroid.phar
+ && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}"
  
-RUN cd /usr/bin \
- && wget -q https://ci.appveyor.com/api/buildjobs/u3xd4v8sr44plljv/artifacts/easy-novnc_linux-64bit \
- && chmod +x easy-novnc_linux-64bit
-
-COPY supervisord.conf /etc/
+USER theia
 
 # ports and volumes
-EXPOSE 8443 8080
+EXPOSE 3000
 
-CMD /usr/bin/supervisord --configuration /etc/supervisord.conf
