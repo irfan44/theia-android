@@ -16,7 +16,7 @@ This repository contains Dockerfiles of Theia with included Java, Kotlin, Gradle
 
 | Image Name           | Description                                                  | Size   |
 | -------------------- | ------------------------------------------------------------ | ------ |
-| theia-android-java   | Theia with Java & Android SDK                                | 2.2 GB |
+| [theia-android-java](https://hub.docker.com/r/irfannm/theia-android-java)   | Theia with Java & Android SDK                                | 2.2 GB |
 | theia-android-kotlin | Theia with Kotlin & Android SDK                              | 2.2 GB |
 | theia-android-full   | Theia with Java, Kotlin, & full Android SDK, including emulator | 6.2 GB |
 
