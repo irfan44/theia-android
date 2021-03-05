@@ -1,21 +1,16 @@
-FROM ghcr.io/linuxserver/code-server:latest
+FROM irfannm/theia:latest
 
 # set version label
 LABEL maintainer="irfan44"
+
+USER root
 
 RUN \
  apt-get update && \
  apt-get install -y --no-install-recommends \
  apt-utils \
- php \
  wget \
-#  libncurses5:i386 \
-#  libc6:i386 \
-#  libstdc++6:i386 \
-#  lib32gcc1 \
-#  lib32ncurses6 \
-#  lib32z1 \
-#  zlib1g:i386 \
+ ca-certificates \
  tigervnc-standalone-server \
  supervisor\
  gosu \
@@ -28,7 +23,6 @@ RUN \
  vim \
  && rm -rf /var/lib/apt/lists \
  && mkdir -p /usr/share/desktop-directories
-  
 
 # download and install Java
 ENV JDK_HOME /opt/java
@@ -84,11 +78,6 @@ ARG IMG_TYPE=google_apis
 RUN yes | sdkmanager --licenses \
  && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}" "system-images;android-${API_LEVEL};${IMG_TYPE};${PROCESSOR}" "sources;android-${API_LEVEL}"
 
-# Download phpandroid-cli
-ARG PHPANDROID_VERSION=0.2.0
-RUN cd $HOME \
- && wget -q https://github.com/AnandPilania/php-android-cli/releases/download/v0.2.0/phpandroid.phar
- 
 RUN cd /usr/bin \
  && wget -q https://ci.appveyor.com/api/buildjobs/u3xd4v8sr44plljv/artifacts/easy-novnc_linux-64bit \
  && chmod +x easy-novnc_linux-64bit
@@ -99,3 +88,5 @@ COPY supervisord.conf /etc/
 EXPOSE 8443 8080
 
 CMD /usr/bin/supervisord --configuration /etc/supervisord.conf
+
+USER theia
