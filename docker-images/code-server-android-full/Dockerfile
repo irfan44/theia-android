@@ -12,12 +12,14 @@ RUN \
  wget \
  ca-certificates \
  tigervnc-standalone-server \
+ gosu \
  supervisor\
  qt5-default \
  qemu-kvm \
  libxcomposite1 \
  libxtst6 \
  openbox \
+ xterm \
  unzip \
  vim \
  && rm -rf /var/lib/apt/lists \
@@ -81,11 +83,9 @@ RUN cd /usr/bin \
  && wget -q https://ci.appveyor.com/api/buildjobs/u3xd4v8sr44plljv/artifacts/easy-novnc_linux-64bit \
  && chmod +x easy-novnc_linux-64bit
 
-COPY supervisord.conf /etc/
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # ports and volumes
 EXPOSE 3000 8080
 
-CMD /usr/bin/supervisord --configuration /etc/supervisord.conf
-
-USER theia
+ENTRYPOINT ["/usr/bin/supervisord"]
