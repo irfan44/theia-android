@@ -13,7 +13,6 @@ RUN \
  ca-certificates \
  tigervnc-standalone-server \
  supervisor\
- gosu \
  qt5-default \
  qemu-kvm \
  libxcomposite1 \
@@ -85,7 +84,7 @@ RUN cd /usr/bin \
 COPY supervisord.conf /etc/
 
 # ports and volumes
-EXPOSE 8443 8080
+EXPOSE 3000 8080
 
 CMD /usr/bin/supervisord --configuration /etc/supervisord.conf
 
