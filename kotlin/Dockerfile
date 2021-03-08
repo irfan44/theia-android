@@ -13,7 +13,7 @@ RUN \
  wget \
  unzip \
  vim \
- && rm -rf /var/lib/apt/lists \
+ && rm -rf /var/lib/apt/lists
 
 # download and install Java
 ENV JDK_HOME /opt/java
