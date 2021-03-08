@@ -40,8 +40,7 @@ RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools \
 ENV PATH ${PATH}:${JAVA_HOME}/bin:${GRADLE_HOME}/gradle-${GRADLE_VERSION}/bin:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/emulator
 ENV LD_LIBRARY_PATH ${ANDROID_SDK_ROOT}/emulator/lib64:${ANDROID_SDK_ROOT}/emulator/lib64/qt/lib
 
-# Install Android SDK 30
-ARG ANDROID_VERSION=11
+# Install Android SDK 30 / Android 11
 ARG API_LEVEL=30
 ARG BUILD_VERSION=30.0.3
 ARG PROCESSOR=x86_64
