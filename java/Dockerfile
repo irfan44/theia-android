@@ -26,16 +26,6 @@ RUN mkdir -p ${JDK_HOME} \
  && rm OpenJDK*.tar.gz
 ENV JAVA_HOME ${JDK_HOME}/jdk-${JDK_VERSION}
 
-# download and install Gradle
-# https://services.gradle.org/distributions/
-ENV GRADLE_HOME /opt/gradle
-ARG GRADLE_VERSION=6.7
-ARG GRADLE_DIST=bin
-RUN mkdir -p ${GRADLE_HOME} \
- && wget -q --no-check-certificate https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-${GRADLE_DIST}.zip \
- && unzip gradle*.zip -d ${GRADLE_HOME} \
- && rm gradle*.zip
-
 # download and install Android command tools
 # https://developer.android.com/studio#command-tools
 ARG ANDROID_SDK_VERSION=6858069
@@ -61,4 +51,3 @@ RUN yes | sdkmanager --licenses \
 
 # ports and volumes
 EXPOSE 3000
-
