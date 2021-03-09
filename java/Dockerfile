@@ -42,8 +42,6 @@ ENV PATH ${PATH}:${JAVA_HOME}/bin:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:$
 # Install Android SDK 30 / Android 11
 ARG API_LEVEL=30
 ARG BUILD_VERSION=30.0.3
-ARG PROCESSOR=x86_64
-ARG IMG_TYPE=google_apis
 RUN yes | sdkmanager --licenses \
  && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}"
 
