@@ -45,5 +45,12 @@ ARG BUILD_VERSION=30.0.3
 RUN yes | sdkmanager --licenses \
  && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}"
 
+COPY gitclone.sh /
+RUN cd / && chmod +x gitclone.sh
+
 # ports and volumes
 EXPOSE 3000
+
+COPY entrypoint.sh /
+RUN cd / && chmod +x entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]EXPOSE 3000
