@@ -54,9 +54,10 @@ ARG BUILD_VERSION=30.0.3
 RUN yes | sdkmanager --licenses \
  && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}"
  
-ARG PROJECTLINK=https://github.com/irfan44/example-android-project.git
-ENV PROJECT-GIT $PROJECTLINK
-RUN cd /home/project && git clone ${PROJECT-GIT}
+COPY gitclone.sh /home/project
+RUN cd /home/project && chmod +x gitclone.sh
+
+CMD ["/home/project/gitclone.sh"]
 
 # ports and volumes
 EXPOSE 3000
