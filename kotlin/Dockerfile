@@ -54,9 +54,9 @@ ARG BUILD_VERSION=30.0.3
 RUN yes | sdkmanager --licenses \
  && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}"
  
-RUN git clone https://github.com/irfan44/example-android-project.git
-
-WORKDIR /workspace/projects/example-android-project
+RUN cd /home/project && git clone https://github.com/irfan44/example-android-project.git
 
 # ports and volumes
 EXPOSE 3000
+
+ENTRYPOINT [ "node", "/home/theia/src-gen/backend/main.js", "/home/project/example-android-project", "--hostname=0.0.0.0" ]
