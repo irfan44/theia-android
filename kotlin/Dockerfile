@@ -53,6 +53,10 @@ ARG API_LEVEL=30
 ARG BUILD_VERSION=30.0.3
 RUN yes | sdkmanager --licenses \
  && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}"
+ 
+RUN git clone https://github.com/irfan44/example-android-project.git
+
+WORKDIR /workspace/projects/example-android-project
 
 # ports and volumes
 EXPOSE 3000
