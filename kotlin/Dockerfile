@@ -3,20 +3,18 @@ FROM irfannm/theia:latest
 # set version label
 LABEL maintainer="irfan44"
 
-USER root
-
 RUN \
- apt-get update && \
- apt-get install -y --no-install-recommends \
+ sudo apt-get update && \
+ sudo apt-get install -y --no-install-recommends \
  ca-certificates \
  wget \
  unzip \
  vim \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists
+ && sudo apt-get clean \
+ && sudo rm -rf /var/lib/apt/lists
 
 # download and install Java
-ENV JDK_HOME /opt/java
+ENV JDK_HOME /home/theia/java
 ARG JDK_DOWNLOAD=11.0.10_9
 ARG JDK_VERSION=11.0.10+9
 RUN mkdir -p ${JDK_HOME} \
@@ -28,9 +26,10 @@ ENV JAVA_HOME ${JDK_HOME}/jdk-${JDK_VERSION}
 
 # download and install Kotlin compiler
 # https://github.com/JetBrains/kotlin/releases/latest
-ENV KOTLIN_HOME /opt/kotlinc
+ENV KOTLIN_HOME /home/theia/kotlinc
 ARG KOTLIN_VERSION=1.4.10
-RUN cd /opt \
+RUN mkdir -p ${KOTLIN_HOME} \
+ && cd ${KOTLIN_HOME} \
  && wget -q https://github.com/JetBrains/kotlin/releases/download/v${KOTLIN_VERSION}/kotlin-compiler-${KOTLIN_VERSION}.zip \
  && unzip *kotlin*.zip \
  && rm *kotlin*.zip
@@ -38,7 +37,7 @@ RUN cd /opt \
 # download and install Android command tools
 # https://developer.android.com/studio#command-tools
 ARG ANDROID_SDK_VERSION=6858069
-ENV ANDROID_SDK_ROOT /opt/android-sdk
+ENV ANDROID_SDK_ROOT /home/theia/android-sdk
 RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools \
  && wget -q https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_VERSION}_latest.zip \
  && unzip *tools*linux*.zip -d ${ANDROID_SDK_ROOT}/cmdline-tools \
@@ -54,12 +53,12 @@ ARG BUILD_VERSION=30.0.3
 RUN yes | sdkmanager --licenses \
  && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}"
  
-COPY gitclone.sh /
-RUN cd / && chmod +x gitclone.sh
+COPY gitclone.sh /home/theia
+RUN cd /home/theia && sudo chmod +x gitclone.sh
 
 # ports and volumes
 EXPOSE 3000
 
-COPY entrypoint.sh /
-RUN cd / && chmod +x entrypoint.sh
-ENTRYPOINT [ "/entrypoint.sh" ]
+COPY entrypoint.sh /home/theia
+RUN cd /home/theia && sudo chmod +x entrypoint.sh
+ENTRYPOINT [ "/home/theia/entrypoint.sh" ]
