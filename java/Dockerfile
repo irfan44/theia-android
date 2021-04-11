@@ -7,7 +7,7 @@ FROM theiaide/theia
 ENV JAVA_HOME /home/theia/java/jdk-${JDK_VERSION}
 ARG ANDROID_SDK_VERSION=6858069
 ENV ANDROID_SDK_ROOT /home/theia/android-sdk
-ENV PATH ${PATH}:${JAVA_HOME}/bin:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/emulator
+ENV PATH ${PATH}:${JAVA_HOME}/bin:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/emulator:${ANDROID_SDK_ROOT}/build-tools
 
 COPY --from=java /opt/java/openjdk ${JAVA_HOME}
 
