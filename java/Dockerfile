@@ -43,14 +43,8 @@ ARG BUILD_VERSION=30.0.3
 RUN yes | sdkmanager --licenses \
  && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}"
 
-COPY gitclone.sh /home/theia
-RUN cd /home/theia && sudo chmod +x gitclone.sh
-
-# ports and volumes
-EXPOSE 3000
-
-COPY entrypoint.sh /home/theia
-RUN cd /home/theia && sudo chmod +x entrypoint.sh
+COPY . /home/theia
+RUN cd /home/theia && sudo chmod +x entrypoint.sh gitclone.sh
 ENTRYPOINT [ "/home/theia/entrypoint.sh" ]
 
 EXPOSE 3000
