@@ -37,12 +37,10 @@ RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools \
 # Environment variable
 ENV PATH ${PATH}:${JAVA_HOME}/bin:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin:${ANDROID_SDK_ROOT}/platform-tools:${ANDROID_SDK_ROOT}/emulator
 
-# Install Android SDK 30 / Android 11
-ARG API_LEVEL=30
-ARG BUILD_VERSION=30.0.3
+# Aggree to sdk license
 RUN yes | sdkmanager --licenses \
- && sdkmanager "platforms;android-${API_LEVEL}" "build-tools;${BUILD_VERSION}"
 
+# Copying scripts
 COPY . /home/theia
 RUN cd /home/theia && sudo chmod +x entrypoint.sh gitclone.sh
 ENTRYPOINT [ "/home/theia/entrypoint.sh" ]
